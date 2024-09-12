@@ -8,6 +8,8 @@ export class StringCalculatorService {
   constructor() { }
 
   add(numbers: string): number {
+    console.log(numbers);
+
     if (!numbers) {
       return 0;
     }
