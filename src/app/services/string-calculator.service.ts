@@ -11,12 +11,25 @@ export class StringCalculatorService {
     if (!numbers) {
       return 0;
     }
+    let delimiter = ',';
+    if (numbers.startsWith('//')) {
+      const parts = numbers.split('\n');
+      delimiter = parts[0].substring(2);
+      numbers = parts[1];
+    }
 
-    const numArray = numbers.split(',');
+    const numArray = numbers.split(new RegExp(`[${delimiter}\n]`));
+    const negativeNumbers = numArray.filter(num => parseInt(num, 10) < 0);
+
+    if (negativeNumbers.length) {
+      throw new Error(`negative no not allowed ${negativeNumbers.join(',')}`);
+    }
+
     const sum = numArray.reduce((acc, num) => acc + parseInt(num, 10), 0);
     console.log("check sum", sum);
 
     return sum;
   }
+
 
 }
